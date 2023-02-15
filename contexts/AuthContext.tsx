@@ -1,7 +1,7 @@
 import { UserType, LoginType } from "@/types/types";
 import { createContext, useEffect, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
-
+import { toast } from "react-toastify";
 import Router from "next/router";
 
 interface Props {
@@ -57,6 +57,10 @@ export default function AuthContextProvider({ children }: Props) {
         body: JSON.stringify(data),
       }
     );
+
+    if (!login.ok) {
+      toast.error("E-mail or password incorrect");
+    }
 
     const resp = await login.json();
 
