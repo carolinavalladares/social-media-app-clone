@@ -30,11 +30,13 @@ export default function Page() {
       >
         <h3 className="font-semibold text-lg mb-4">Login</h3>
         <div className="flex flex-col mb-4 relative">
-          <label htmlFor="email">Email: </label>
+          <label className="mb-2 text-sm" htmlFor="email">
+            Email:{" "}
+          </label>
           <input
             {...register("email", { required: true })}
             className="border h-8 px-2"
-            type="text"
+            type="email"
             name="email"
           />
           {errors.email && (
@@ -45,7 +47,9 @@ export default function Page() {
         </div>
 
         <div className="flex flex-col mb-4 relative">
-          <label htmlFor="password">Password:</label>
+          <label className=" mb-2 text-sm" htmlFor="password">
+            Password:
+          </label>
           <input
             {...register("password", { required: true })}
             className="border h-8 px-2"
@@ -63,11 +67,11 @@ export default function Page() {
           type="submit"
           className="bg-slate-700 text-white w-full h-9 mt-5"
         >
-          Sign In
+          Login
         </button>
 
         <p className="text-sm text-slate-400 text-center mt-4">
-          Don't have an account yet?{" "}
+          Don't have an account yet?
           <Link
             href={"/register"}
             className="inline-block ml-1 text-slate-700 hover:underline"

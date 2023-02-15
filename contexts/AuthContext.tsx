@@ -1,4 +1,4 @@
-import { UserType, LoginType } from "@/types/types";
+import { UserType, LoginType, RegisterType } from "@/types/types";
 import { createContext, useEffect, useState } from "react";
 import { setCookie, parseCookies, destroyCookie } from "nookies";
 import { toast } from "react-toastify";
@@ -12,6 +12,7 @@ interface AuthProps {
   user: UserType;
   signIn: (data: LoginType) => void;
   signOut: () => void;
+  signUp: (data: RegisterType) => void;
 }
 
 export const AuthContext = createContext({} as AuthProps);
@@ -80,8 +81,31 @@ export default function AuthContextProvider({ children }: Props) {
     Router.push("/login");
   }
 
+  async function signUp(data: RegisterType) {
+    const register = await fetch(
+      process.env.NEXT_PUBLIC_REGISTER_ENDPOINT as string,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (!register.ok) {
+      toast.error("user already exists");
+      return Router.push("/login");
+    }
+
+    console.log(register);
+
+    Router.push("/login");
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, signIn, signOut, signUp }}>
       {children}
     </AuthContext.Provider>
   );
