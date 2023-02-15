@@ -1,6 +1,6 @@
-import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import { GetServerSideProps } from "next";
+import Link from "next/link";
 import { parseCookies } from "nookies";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -63,8 +63,18 @@ export default function Page() {
           type="submit"
           className="bg-slate-700 text-white w-full h-9 mt-5"
         >
-          Entrar
+          Sign In
         </button>
+
+        <p className="text-sm text-slate-400 text-center mt-4">
+          Don't have an account yet?{" "}
+          <Link
+            href={"/register"}
+            className="inline-block ml-1 text-slate-700 hover:underline"
+          >
+            Register
+          </Link>
+        </p>
       </form>
     </div>
   );

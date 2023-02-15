@@ -58,8 +58,9 @@ export default function AuthContextProvider({ children }: Props) {
       }
     );
 
+    // Notify user if email or password is incorrect
     if (!login.ok) {
-      toast.error("E-mail or password incorrect");
+      return toast.error("E-mail or password incorrect");
     }
 
     const resp = await login.json();
