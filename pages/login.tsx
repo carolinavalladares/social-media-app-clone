@@ -35,7 +35,9 @@ export default function Page() {
           </label>
           <input
             {...register("email", { required: true })}
-            className="border h-8 px-2"
+            className={`border px-2 h-10 text-lg ${
+              errors.email && "border-rose-500"
+            }`}
             type="email"
             name="email"
           />
@@ -52,7 +54,9 @@ export default function Page() {
           </label>
           <input
             {...register("password", { required: true })}
-            className="border h-8 px-2"
+            className={`border px-2 h-10 text-lg ${
+              errors.password && "border-rose-500"
+            }`}
             type="password"
             name="password"
           />
