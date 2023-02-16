@@ -28,6 +28,7 @@ export default function Page() {
         displayName: data.displayName,
         email: data.email,
         password: data.password,
+        profileImage: "",
       };
 
       signUp(values);

@@ -67,7 +67,7 @@ export default function AuthContextProvider({ children }: Props) {
     const resp = await login.json();
 
     setCookie(undefined, "authTest.token", resp.token, {
-      maxAge: 60 * 60 * 1, //1 hour
+      maxAge: 60 * 60 * 3, //1 hour
     });
 
     setUser(resp.user);

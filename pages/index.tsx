@@ -3,17 +3,14 @@ import useAuth from "@/hooks/useAuth";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import { useEffect } from "react";
+import UserBadge from "@/components/UserBadge";
 
 export default function Home() {
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     console.log(user);
   }, []);
-
-  const handleSignOut = () => {
-    signOut();
-  };
 
   return (
     <>
@@ -23,18 +20,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <h4>Hello, {user.username}</h4>
+      <main className="p-4 max-w-5xl m-auto">
+        <div className="flex items-center gap-4">
+          <div className=" ">
+            <UserBadge />
+          </div>
 
-        <p>your email is: {user.email}</p>
-
-        <div className="mt-7">
-          <button
-            onClick={handleSignOut}
-            className="bg-slate-700 text-white font-semibold p-2 text-sm flex items-center justify-center"
-          >
-            Sign out
-          </button>
+          <div className="flex-1">post form</div>
         </div>
       </main>
     </>

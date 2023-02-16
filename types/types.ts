@@ -1,7 +1,13 @@
 export interface UserType {
+  displayName: string;
   username: string;
   email: string;
   id: string;
+  following: string[];
+  followers: string[];
+  posts: string[];
+  profileImage: string;
+  createdAt: string;
 }
 export interface LoginType {
   email: string;
@@ -12,4 +18,5 @@ export interface RegisterType {
   username: string;
   password: string;
   email: string;
+  profileImage: string;
 }
