@@ -4,13 +4,14 @@ import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import { useEffect } from "react";
 import UserBadge from "@/components/UserBadge";
+import PostForm from "@/components/PostForm";
 
 export default function Home() {
   const { user } = useAuth();
 
   useEffect(() => {
     console.log(user);
-  }, []);
+  }, [user]);
 
   return (
     <>
@@ -21,12 +22,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="p-4 max-w-5xl m-auto">
-        <div className="flex items-center gap-4">
-          <div className=" ">
+        <div className="flex items-center gap-4 h-44">
+          <div className="">
             <UserBadge />
           </div>
 
-          <div className="flex-1">post form</div>
+          <div className="flex-1">
+            <PostForm />
+          </div>
         </div>
       </main>
     </>

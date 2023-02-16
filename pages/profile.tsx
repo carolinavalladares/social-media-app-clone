@@ -1,8 +1,13 @@
 import useAuth from "@/hooks/useAuth";
+import { PostType } from "@/types/types";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
+import Post from "@/components/Post";
+interface Props {
+  posts: PostType[];
+}
 
-export default function () {
+export default function ({ posts }: Props) {
   const { user } = useAuth();
   const {
     profileImage,
@@ -11,7 +16,6 @@ export default function () {
     following,
     followers,
     createdAt,
-    posts,
   } = user;
 
   return (
@@ -61,10 +65,10 @@ export default function () {
           </>
         )}
       </div>
-
       {/* User's posts */}
       {posts && (
         <div>
+          <h3 className="text-base font-semibold mt-4 ml-2">My Posts</h3>
           {posts.length == 0 ? (
             <div className="h-40 flex items-center justify-center">
               <p className="text-xl text-slate-400 ">No posts yet</p>
@@ -72,7 +76,7 @@ export default function () {
           ) : (
             <div>
               {posts.map((post) => {
-                return <p>{post}</p>;
+                return <Post post={post} />;
               })}
             </div>
           )}
@@ -85,6 +89,22 @@ export default function () {
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { "authTest.token": token } = parseCookies(ctx);
 
+  //   get user's posts
+  const requestPosts = await fetch(
+    process.env.NEXT_PUBLIC_GET_USER_POSTS_ENDPOINT as string,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const resp = await requestPosts.json();
+
+  const posts = resp.posts;
+
   if (!token) {
     return {
       redirect: {
@@ -95,6 +115,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   return {
-    props: {},
+    props: {
+      posts,
+    },
   };
 };

@@ -5,7 +5,7 @@ export interface UserType {
   id: string;
   following: string[];
   followers: string[];
-  posts: string[];
+
   profileImage: string;
   createdAt: string;
 }
@@ -19,4 +19,22 @@ export interface RegisterType {
   password: string;
   email: string;
   profileImage: string;
+}
+
+export interface PostType {
+  content: string;
+  authorId: string;
+  author: {
+    username: string;
+    displayName: string;
+    profileImage: string;
+  };
+  id: string;
+  favourites: userRef[];
+}
+
+// =====
+
+interface userRef {
+  userId: string;
 }
