@@ -2,9 +2,14 @@ import Head from "next/head";
 import useAuth from "@/hooks/useAuth";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
+import { useEffect } from "react";
 
 export default function Home() {
   const { user, signOut } = useAuth();
+
+  useEffect(() => {
+    console.log(user);
+  }, []);
 
   const handleSignOut = () => {
     signOut();

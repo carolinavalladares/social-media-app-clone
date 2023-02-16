@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 
 interface FormDataType {
+  displayName: string;
   username: string;
   email: string;
   password: string;
@@ -22,10 +23,9 @@ export default function Page() {
     if (data.password !== data.confirmPassword) {
       toast.error("Passwords don't match");
     } else {
-      console.log(data.password, data.confirmPassword);
-
       const values = {
         username: data.username,
+        displayName: data.displayName,
         email: data.email,
         password: data.password,
       };
@@ -41,6 +41,17 @@ export default function Page() {
         className="flex flex-col bg-white shadow-md p-4 w-full max-w-sm"
       >
         <h3 className="text-lg font-semibold mb-4 ">Register</h3>
+
+        <div className="flex flex-col mb-4">
+          <label className="mb-2 text-sm" htmlFor="displayName">
+            Display name:{" "}
+          </label>
+          <input
+            className="border px-2 h-10 text-lg"
+            type="text"
+            {...register("displayName", { required: true })}
+          />
+        </div>
 
         <div className="flex flex-col mb-4">
           <label className="mb-2 text-sm" htmlFor="username">

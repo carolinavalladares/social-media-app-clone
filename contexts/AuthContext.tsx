@@ -94,12 +94,11 @@ export default function AuthContextProvider({ children }: Props) {
       }
     );
 
-    if (!register.ok) {
-      toast.error("user already exists");
-      return Router.push("/login");
-    }
+    const resp = await register.json();
 
-    console.log(register);
+    if (resp.status !== 201) {
+      return toast.error(resp.message);
+    }
 
     Router.push("/login");
   }
