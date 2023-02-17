@@ -1,8 +1,12 @@
+import { useEffect } from "react";
+
 import useAuth from "@/hooks/useAuth";
 import { PostType } from "@/types/types";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import Post from "@/components/Post";
+import Link from "next/link";
+
 interface Props {
   posts: PostType[];
 }
@@ -20,6 +24,13 @@ export default function ({ posts }: Props) {
 
   return (
     <div className="p-4 max-w-5xl m-auto">
+      <Link
+        className="text-sm text-slate-500 hover:underline inline-block mb-2"
+        href={"/"}
+      >
+        {"< Timeline"}
+      </Link>
+
       {/* Header */}
       <div className="bg-white shadow-md p-4 ">
         {user && (
@@ -76,7 +87,11 @@ export default function ({ posts }: Props) {
           ) : (
             <div>
               {posts.map((post) => {
-                return <Post post={post} />;
+                return (
+                  <Post key={post._id} post={post}>
+                    {/* Add post management options here */}
+                  </Post>
+                );
               })}
             </div>
           )}

@@ -1,10 +1,12 @@
 import { PostType } from "@/types/types";
+import { convertToLocalTime } from "@/utils/convertToLocalTime";
 
 interface Props {
   post: PostType;
+  children?: JSX.Element | JSX.Element[];
 }
 
-const Post = ({ post }: Props) => {
+const Post = ({ post, children }: Props) => {
   const { content, author } = post;
 
   return (
@@ -18,8 +20,8 @@ const Post = ({ post }: Props) => {
           )}
         </div>
         {/* username */}
-        <div>
-          <h4 className="font-semibold m-0 text-sm leading-none mb-1">
+        <div className="flex items-center gap-1 ">
+          <h4 className="font-semibold m-0 text-sm leading-none ">
             {author.displayName}
           </h4>
           <p className=" m-0 text-sm leading-none text-slate-400">
@@ -29,6 +31,16 @@ const Post = ({ post }: Props) => {
       </div>
       {/* content */}
       <div className="mt-2 ml-2">{content}</div>
+
+      {/* date container */}
+      <div className="mt-2 ml-2">
+        {/* timestamp */}
+        <p className="m-0 text-xs leading-none text-slate-400">
+          {convertToLocalTime(post.createdAt).dateString}
+        </p>
+      </div>
+
+      {children && <div className="border-t pt-2 mt-2 pl-2">{children}</div>}
     </div>
   );
 };

@@ -2,16 +2,11 @@ import Head from "next/head";
 import useAuth from "@/hooks/useAuth";
 import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
-import { useEffect } from "react";
 import UserBadge from "@/components/UserBadge";
 import PostForm from "@/components/PostForm";
 
 export default function Home() {
   const { user } = useAuth();
-
-  useEffect(() => {
-    console.log(user);
-  }, [user]);
 
   return (
     <>
