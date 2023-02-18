@@ -4,6 +4,8 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { parseCookies } from "nookies";
 import { convertToLocalTime } from "@/utils/convertToLocalTime";
+import useAuth from "@/hooks/useAuth";
+import FollowBtn from "@/components/FollowBtn";
 
 interface Props {
   profileUser: UserType;
@@ -18,7 +20,11 @@ export default function Page({ profileUser, profileUserPosts }: Props) {
     following,
     profileImage,
     createdAt,
+    _id,
   } = profileUser;
+
+  const { user } = useAuth();
+
   return (
     <div className="p-4 max-w-5xl m-auto">
       <Link
@@ -53,9 +59,8 @@ export default function Page({ profileUser, profileUserPosts }: Props) {
                 </div>
               </div>
 
-              <button className="bg-slate-700 text-white text-sm font-semibold px-2 py-1">
-                Follow
-              </button>
+              {/* Follow Btn */}
+              <FollowBtn profileUser={profileUser} loggedInUser={user} />
             </div>
 
             <div className="mt-2">
