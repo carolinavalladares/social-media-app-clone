@@ -9,7 +9,7 @@ const UserBadge = () => {
   };
 
   return (
-    <div className="p-4 shadow-md bg-white w-40">
+    <div className="p-4 shadow-md bg-white w-48">
       <Link href={"/profile"}>
         <div className="flex flex-col items-center justify-center">
           {/* picture container */}

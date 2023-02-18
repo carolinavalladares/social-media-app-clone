@@ -6,6 +6,7 @@ import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import Post from "@/components/Post";
 import Link from "next/link";
+import { convertToLocalTime } from "@/utils/convertToLocalTime";
 
 interface Props {
   posts: PostType[];
@@ -58,7 +59,7 @@ export default function ({ posts }: Props) {
             <div className="mt-2">
               {createdAt && (
                 <p className="text-slate-400 text-xs">
-                  member since {createdAt.split("-")[0]}
+                  member since {convertToLocalTime(createdAt).monthYear}
                 </p>
               )}
             </div>

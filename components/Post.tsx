@@ -36,7 +36,7 @@ const Post = ({ post, children }: Props) => {
       <div className="mt-2 ml-2">
         {/* timestamp */}
         <p className="m-0 text-xs leading-none text-slate-400">
-          {convertToLocalTime(post.createdAt).dateString}
+          {convertToLocalTime(post.createdAt).dateTime}
         </p>
       </div>
 

@@ -4,8 +4,14 @@ import { GetServerSideProps } from "next";
 import { parseCookies } from "nookies";
 import UserBadge from "@/components/UserBadge";
 import PostForm from "@/components/PostForm";
+import UserList from "@/components/UserList";
+import { UserType } from "@/types/types";
 
-export default function Home() {
+interface Props {
+  users: UserType[];
+}
+
+export default function Home({ users }: Props) {
   const { user } = useAuth();
 
   return (
@@ -16,7 +22,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="p-4 max-w-5xl m-auto">
+      <main className="p-4 max-w-5xl m-auto flex flex-col min-h-screen">
         <div className="flex items-center gap-4 h-44">
           <div className="">
             <UserBadge />
@@ -25,6 +31,10 @@ export default function Home() {
           <div className="flex-1">
             <PostForm />
           </div>
+        </div>
+
+        <div className=" flex flex-col flex-1">
+          <UserList users={users} />
         </div>
       </main>
     </>
@@ -43,7 +53,20 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
+  const usersReq = await fetch(
+    process.env.NEXT_PUBLIC_GET_ALL_USERS_ENDPOINT as string,
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const data = await usersReq.json();
+
   return {
-    props: {},
+    props: { users: data.users },
   };
 };
