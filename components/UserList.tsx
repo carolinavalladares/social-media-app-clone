@@ -7,23 +7,29 @@ interface ListProps {
   users: UserType[];
 }
 interface UserProps {
-  user: UserType;
+  profileUser: UserType;
 }
 
-const User = ({ user }: UserProps) => {
-  const { displayName, username, profileImage, _id } = user;
+const User = ({ profileUser }: UserProps) => {
+  const { displayName, username, profileImage, _id } = profileUser;
+  const { user } = useAuth();
+
   return (
     <Link href={`/user/${_id}`}>
-      <div className="flex items-center mb-4 gap-2 border-t pt-2">
-        {/* picture container */}
-        <div className="h-8 w-8 rounded-full bg-slate-300 border border-slate-400 flex items-center justify-center">
-          {profileImage && <img src={`${profileImage}`} alt="profile image" />}
-        </div>
-        <div>
-          <p className="text-sm font-semibold leading-none mb-1">
-            {displayName}
-          </p>
-          <p className="text-sm text-slate-400 leading-none">@{username}</p>
+      <div className="border-t flex flex-col relative">
+        <div className="flex items-center mb-4 gap-2 pt-2">
+          {/* picture container */}
+          <div className="h-8 w-8 rounded-full bg-slate-300 border border-slate-400 flex items-center justify-center">
+            {profileImage && (
+              <img src={`${profileImage}`} alt="profile image" />
+            )}
+          </div>
+          <div>
+            <p className="text-sm font-semibold leading-none mb-1">
+              {displayName}
+            </p>
+            <p className="text-sm text-slate-400 leading-none">@{username}</p>
+          </div>
         </div>
       </div>
     </Link>
@@ -42,7 +48,7 @@ const UserList = ({ users }: ListProps) => {
           {users
             .filter((userItem) => userItem._id !== user._id)
             .map((userItem) => {
-              return <User key={userItem._id} user={userItem} />;
+              return <User key={userItem._id} profileUser={userItem} />;
             })}
         </ul>
       )}

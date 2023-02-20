@@ -14,7 +14,7 @@ const PostForm = () => {
   const watchContent = watch(["content"]);
 
   useEffect(() => {
-    if (!watchContent[0]) {
+    if (!watchContent[0] || watchContent[0].length > 300) {
       setHasContent(false);
     } else {
       setHasContent(true);
@@ -42,14 +42,21 @@ const PostForm = () => {
           ></textarea>
         </div>
 
-        <button
-          type="submit"
-          className={`self-end px-4 py-1 bg-slate-700 text-white font-semibold ${
-            !hasContent ? "pointer-events-none opacity-50" : null
-          }`}
-        >
-          Post
-        </button>
+        <div className="flex justify-between">
+          <p
+            className={`font-semibold text-xs text-slate-400 m-0 ${
+              watchContent[0].length > 300 ? "text-rose-600" : null
+            }`}
+          >{`${watchContent[0].length}/300`}</p>
+          <button
+            type="submit"
+            className={`self-end px-4 py-1 bg-slate-700 text-white font-semibold ${
+              !hasContent ? "pointer-events-none opacity-50" : null
+            }`}
+          >
+            Post
+          </button>
+        </div>
       </form>
     </div>
   );
