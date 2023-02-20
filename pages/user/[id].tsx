@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Post from "@/components/Post";
 import { PostType, UserType } from "@/types/types";
 import { GetServerSideProps } from "next";

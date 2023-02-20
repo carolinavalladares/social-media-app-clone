@@ -13,6 +13,7 @@ interface AuthProps {
   signIn: (data: LoginType) => void;
   signOut: () => void;
   signUp: (data: RegisterType) => void;
+  refreshUser: (token: string) => void;
 }
 
 export const AuthContext = createContext({} as AuthProps);
@@ -104,7 +105,9 @@ export default function AuthContextProvider({ children }: Props) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut, signUp }}>
+    <AuthContext.Provider
+      value={{ refreshUser: userInfoRequest, user, signIn, signOut, signUp }}
+    >
       {children}
     </AuthContext.Provider>
   );

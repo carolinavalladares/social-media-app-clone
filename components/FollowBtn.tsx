@@ -1,17 +1,22 @@
+import { useEffect, useState } from "react";
 import { UserType } from "@/types/types";
 import { getToken } from "@/utils/getToken";
-import { useState, useEffect } from "react";
+import useAuth from "@/hooks/useAuth";
 
 interface Props {
   loggedInUser: UserType;
   profileUser: UserType;
 }
 
-const FollowBtn = ({ loggedInUser, profileUser }: Props) => {
-  const [following, setFollowing] = useState<boolean>();
+const FollowBtn = ({
+  loggedInUser,
 
+  profileUser,
+}: Props) => {
+  const [isFollowing, setIsFollowing] = useState<boolean>();
+  const { refreshUser } = useAuth();
   useEffect(() => {
-    setFollowing(
+    setIsFollowing(
       loggedInUser.following && loggedInUser.following.includes(profileUser._id)
     );
   }, [loggedInUser]);
@@ -33,8 +38,10 @@ const FollowBtn = ({ loggedInUser, profileUser }: Props) => {
 
       const data = await follow.json();
 
-      setFollowing(true);
+      setIsFollowing(true);
       console.log(data);
+
+      await refreshUser(token);
     } catch (error) {
       console.log(error);
     }
@@ -57,15 +64,17 @@ const FollowBtn = ({ loggedInUser, profileUser }: Props) => {
 
       const data = await unfollow.json();
 
-      setFollowing(false);
+      setIsFollowing(false);
       console.log(data);
+
+      await refreshUser(token);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleFollow = () => {
-    if (!following) {
+  const handleFollow = async () => {
+    if (!isFollowing) {
       follow();
     } else {
       unfollow();
@@ -77,7 +86,7 @@ const FollowBtn = ({ loggedInUser, profileUser }: Props) => {
       onClick={handleFollow}
       className={`bg-slate-700 text-white text-sm font-semibold px-2 py-1`}
     >
-      {following ? "Unfollow" : " Follow"}
+      {isFollowing ? "Unfollow" : " Follow"}
     </button>
   );
 };
