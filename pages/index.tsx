@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Head from "next/head";
 import useAuth from "@/hooks/useAuth";
 import { GetServerSideProps } from "next";
@@ -5,13 +6,16 @@ import { parseCookies } from "nookies";
 import UserBadge from "@/components/UserBadge";
 import PostForm from "@/components/PostForm";
 import UserList from "@/components/UserList";
-import { UserType } from "@/types/types";
+import { PostType, UserType } from "@/types/types";
+import { refreshData } from "@/utils/refreshData";
+import Post from "@/components/Post";
 
 interface Props {
   users: UserType[];
+  timeline: PostType[];
 }
 
-export default function Home({ users }: Props) {
+export default function Home({ users, timeline }: Props) {
   const { user } = useAuth();
 
   return (
@@ -33,8 +37,18 @@ export default function Home({ users }: Props) {
           </div>
         </div>
 
-        <div className=" flex flex-col flex-1">
-          <UserList users={users} />
+        <div className="flex gap-4 flex-1">
+          <div className=" flex flex-col">
+            <UserList users={users} />
+          </div>
+
+          {/* timeline */}
+          <div className="flex-1">
+            {timeline &&
+              timeline.map((post) => {
+                return <Post key={post._id} post={post} />;
+              })}
+          </div>
         </div>
       </main>
     </>
@@ -66,7 +80,22 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   );
   const data = await usersReq.json();
 
+  // get timeline
+  const timelineReq = await fetch(
+    process.env.NEXT_PUBLIC_GET_TIMELINE_ENDPOINT as string,
+    {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const timelinePosts = await timelineReq.json();
+
   return {
-    props: { users: data.users },
+    props: { users: data.users, timeline: timelinePosts.posts },
   };
 };

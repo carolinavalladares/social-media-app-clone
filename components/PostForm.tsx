@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { submitPost } from "@/utils/submitPost";
+import { refreshData } from "@/utils/refreshData";
 
 interface FormType {
   content: string;
@@ -14,6 +15,7 @@ const PostForm = () => {
   const watchContent = watch(["content"]);
 
   useEffect(() => {
+    if (!watchContent) return;
     if (!watchContent[0] || watchContent[0].length > 300) {
       setHasContent(false);
     } else {
@@ -25,6 +27,7 @@ const PostForm = () => {
     submitPost(data);
 
     setValue("content", "");
+    refreshData();
   };
 
   return (
@@ -45,9 +48,12 @@ const PostForm = () => {
         <div className="flex justify-between">
           <p
             className={`font-semibold text-xs text-slate-400 m-0 ${
-              watchContent[0].length > 300 ? "text-rose-600" : null
+              watchContent[0] && watchContent[0].length > 300
+                ? "text-rose-600"
+                : null
             }`}
-          >{`${watchContent[0].length}/300`}</p>
+          >{`${watchContent[0] ? watchContent[0].length : "0"}/300`}</p>
+
           <button
             type="submit"
             className={`self-end px-4 py-1 bg-slate-700 text-white font-semibold ${

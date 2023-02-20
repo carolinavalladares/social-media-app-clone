@@ -23,6 +23,14 @@ export default function ({ posts }: Props) {
     createdAt,
   } = user;
 
+  const handleEdit = () => {
+    console.log("Edit");
+  };
+
+  const handleDelete = () => {
+    console.log("Delete");
+  };
+
   return (
     <div className="p-4 max-w-5xl m-auto">
       <Link
@@ -91,6 +99,15 @@ export default function ({ posts }: Props) {
                 return (
                   <Post key={post._id} post={post}>
                     {/* Add post management options here */}
+
+                    <div className="flex items-center gap-2 text-sm font-semibold">
+                      <button onClick={handleEdit} className="text-teal-500">
+                        Edit
+                      </button>
+                      <button onClick={handleDelete} className="text-rose-500">
+                        Delete
+                      </button>
+                    </div>
                   </Post>
                 );
               })}
