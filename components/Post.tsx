@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Post = ({ post, children }: Props) => {
-  const { content, author } = post;
+  const { content, author, createdAt, updatedAt } = post;
 
   return (
     <div className="bg-white shadow-md p-4 mt-4">
@@ -33,11 +33,20 @@ const Post = ({ post, children }: Props) => {
       <div className="mt-2 ml-2">{content}</div>
 
       {/* date container */}
-      <div className="mt-2 ml-2">
+      <div className="mt-2 ml-2 flex items-center">
         {/* timestamp */}
         <p className="m-0 text-xs leading-none text-slate-400">
-          {convertToLocalTime(post.createdAt).dateTime}
+          {convertToLocalTime(createdAt).dateTime}
         </p>
+
+        {updatedAt && (
+          <>
+            <span className="inline-block h-1 w-1 bg-slate-400 rounded mx-2"></span>
+            <p className="m-0 text-xs leading-none text-slate-400">
+              Edited: {convertToLocalTime(updatedAt).dateTime}
+            </p>
+          </>
+        )}
       </div>
 
       {children && <div className="border-t pt-2 mt-2 pl-2">{children}</div>}

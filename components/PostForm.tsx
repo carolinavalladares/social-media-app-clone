@@ -1,13 +1,19 @@
 import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { submitPost } from "@/utils/submitPost";
+import { submitPost, updatePost } from "@/utils/postsRequests";
 import { refreshData } from "@/utils/refreshData";
+import { PostType } from "@/types/types";
 
 interface FormType {
   content: string;
 }
 
-const PostForm = () => {
+interface Props {
+  post?: PostType;
+  setEditOpen?: React.Dispatch<boolean>;
+}
+
+const PostForm = ({ post, setEditOpen }: Props) => {
   const [hasContent, setHasContent] = useState(false);
 
   const { register, handleSubmit, watch, setValue } = useForm<FormType>();
@@ -23,23 +29,33 @@ const PostForm = () => {
     }
   }, [watchContent]);
 
-  const submit: SubmitHandler<FormType> = (data: FormType) => {
-    submitPost(data);
+  useEffect(() => {
+    if (post) {
+      setValue("content", post.content);
+    }
+  }, []);
 
-    setValue("content", "");
-    refreshData();
+  const submit: SubmitHandler<FormType> = (data: FormType) => {
+    if (!post) {
+      submitPost(data);
+      setValue("content", "");
+      refreshData();
+    } else {
+      updatePost(data, post._id);
+      setEditOpen && setEditOpen(false);
+    }
   };
 
   return (
     <div>
       <form
         onSubmit={handleSubmit(submit)}
-        className="p-4 bg-white shadow-md h-44 flex flex-col "
+        className={`p-4 bg-white  h-44 flex flex-col ${!post && "shadow-md"}`}
       >
         <div className=" flex flex-1 mb-2 h-1/2">
           <textarea
             {...register("content", { required: true })}
-            className="w-full resize-none border p-2 outline-none  placeholder:text-slate-300"
+            className="w-full resize-none border p-2 outline-none font-normal placeholder:text-slate-300"
             rows={10}
             placeholder={"What's happening?"}
           ></textarea>
@@ -47,10 +63,10 @@ const PostForm = () => {
 
         <div className="flex justify-between">
           <p
-            className={`font-semibold text-xs text-slate-400 m-0 ${
+            className={`font-semibold text-xs  m-0 ${
               watchContent[0] && watchContent[0].length > 300
                 ? "text-rose-600"
-                : null
+                : "text-slate-400"
             }`}
           >{`${watchContent[0] ? watchContent[0].length : "0"}/300`}</p>
 
@@ -60,7 +76,7 @@ const PostForm = () => {
               !hasContent ? "pointer-events-none opacity-50" : null
             }`}
           >
-            Post
+            {post ? "Edit" : "Post"}
           </button>
         </div>
       </form>

@@ -32,6 +32,7 @@ export interface PostType {
   _id: string;
   favourites: userRef[];
   createdAt: string;
+  updatedAt: string;
 }
 
 // =====

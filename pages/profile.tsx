@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-
+import { useState } from "react";
 import useAuth from "@/hooks/useAuth";
 import { PostType } from "@/types/types";
 import { GetServerSideProps } from "next";
@@ -8,11 +7,14 @@ import Post from "@/components/Post";
 import Link from "next/link";
 import { convertToLocalTime } from "@/utils/convertToLocalTime";
 
+import EditPopup from "@/components/EditPopup";
+import { deletePost } from "@/utils/postsRequests";
 interface Props {
   posts: PostType[];
 }
 
 export default function ({ posts }: Props) {
+  const [editOpen, setEditOpen] = useState(false);
   const { user } = useAuth();
   const {
     profileImage,
@@ -24,11 +26,11 @@ export default function ({ posts }: Props) {
   } = user;
 
   const handleEdit = () => {
-    console.log("Edit");
+    setEditOpen(true);
   };
 
-  const handleDelete = () => {
-    console.log("Delete");
+  const handleDelete = async (postId: string) => {
+    deletePost(postId);
   };
 
   return (
@@ -104,9 +106,16 @@ export default function ({ posts }: Props) {
                       <button onClick={handleEdit} className="text-teal-500">
                         Edit
                       </button>
-                      <button onClick={handleDelete} className="text-rose-500">
+                      <button
+                        onClick={() => handleDelete(post._id)}
+                        className="text-rose-500"
+                      >
                         Delete
                       </button>
+
+                      {editOpen && (
+                        <EditPopup setEditOpen={setEditOpen} post={post} />
+                      )}
                     </div>
                   </Post>
                 );

@@ -1,0 +1,78 @@
+import { getToken } from "./getToken";
+import { refreshData } from "./refreshData";
+
+export async function submitPost(data: { content: string }) {
+  const token = getToken();
+
+  if (!token) {
+    return;
+  }
+
+  try {
+    const submit = await fetch(
+      process.env.NEXT_PUBLIC_SUBMIT_POST_ENDPOINT as string,
+      {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    const resp = await submit.json();
+  } catch (error) {
+    return console.error(error);
+  }
+}
+
+export async function updatePost(data: { content: string }, postId: string) {
+  const token = getToken();
+
+  if (!token) {
+    return;
+  }
+
+  try {
+    const updateReq = await fetch(
+      `${process.env.NEXT_PUBLIC_EDIT_POST_ENDPOINT}/${postId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    const update = await updateReq.json();
+
+    console.log(update);
+    refreshData();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deletePost(postId: string) {
+  const token = getToken();
+  const deleteReq = await fetch(
+    `${process.env.NEXT_PUBLIC_DELETE_POST_ENDPOINT}/${postId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const deleted = await deleteReq.json();
+
+  refreshData();
+}

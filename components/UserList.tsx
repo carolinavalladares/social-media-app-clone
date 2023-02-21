@@ -17,6 +17,11 @@ const User = ({ profileUser }: UserProps) => {
   return (
     <Link href={`/user/${_id}`}>
       <div className="border-t flex flex-col relative">
+        {user.following && user.following.includes(_id) ? (
+          <p className="absolute text-xs bg-slate-400 text-white top-0 right-0 px-1">
+            following
+          </p>
+        ) : null}
         <div className="flex items-center mb-4 gap-2 pt-2">
           {/* picture container */}
           <div className="h-8 w-8 rounded-full bg-slate-300 border border-slate-400 flex items-center justify-center">
