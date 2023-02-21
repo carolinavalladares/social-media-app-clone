@@ -40,7 +40,7 @@ const PostForm = ({ post, setEditOpen }: Props) => {
       submitPost(data);
       setValue("content", "");
     } else {
-      updatePost(data, post._id);
+      updatePost(data, post.id);
       setEditOpen && setEditOpen(false);
     }
   };

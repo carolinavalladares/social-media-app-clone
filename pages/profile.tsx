@@ -104,7 +104,7 @@ export default function ({ posts }: Props) {
             <div>
               {posts.map((post) => {
                 return (
-                  <Post key={post._id} post={post}>
+                  <Post key={post.id} post={post}>
                     {/* Add post management options here */}
 
                     <div className="flex items-center gap-2 text-sm font-semibold">
@@ -112,7 +112,7 @@ export default function ({ posts }: Props) {
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelete(post._id)}
+                        onClick={() => handleDelete(post.id)}
                         className="text-rose-500"
                       >
                         Delete

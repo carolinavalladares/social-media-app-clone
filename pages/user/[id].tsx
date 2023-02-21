@@ -21,7 +21,7 @@ export default function Page({ profileUser, profileUserPosts }: Props) {
     following,
     profileImage,
     createdAt,
-    _id,
+    id,
   } = profileUser;
 
   const { user } = useAuth();
@@ -98,7 +98,7 @@ export default function Page({ profileUser, profileUserPosts }: Props) {
           ) : (
             <div>
               {profileUserPosts.map((post) => {
-                return <Post key={post._id} post={post} />;
+                return <Post key={post.id} post={post} />;
               })}
             </div>
           )}

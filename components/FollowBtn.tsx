@@ -18,15 +18,15 @@ const FollowBtn = ({
   const { refreshUser } = useAuth();
   useEffect(() => {
     setIsFollowing(
-      loggedInUser.following && loggedInUser.following.includes(profileUser._id)
+      loggedInUser.following && loggedInUser.following.includes(profileUser.id)
     );
   }, [loggedInUser]);
 
   const handleFollow = async () => {
     if (!isFollowing) {
-      follow(setIsFollowing, profileUser._id, refreshUser);
+      follow(setIsFollowing, profileUser.id, refreshUser);
     } else {
-      unfollow(setIsFollowing, profileUser._id, refreshUser);
+      unfollow(setIsFollowing, profileUser.id, refreshUser);
     }
   };
 

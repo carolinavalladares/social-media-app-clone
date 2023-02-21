@@ -2,7 +2,7 @@ export interface UserType {
   displayName: string;
   username: string;
   email: string;
-  _id: string;
+  id: string;
   following: string[];
   followers: string[];
 
@@ -29,14 +29,10 @@ export interface PostType {
     displayName: string;
     profileImage: string;
   };
-  _id: string;
-  favourites: userRef[];
+  id: string;
+  favourites: string[];
   createdAt: string;
   updatedAt: string;
 }
 
 // =====
-
-interface userRef {
-  userId: string;
-}

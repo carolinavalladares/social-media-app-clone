@@ -43,8 +43,8 @@ export default function Home({ users, timeline }: Props) {
           {/* timeline */}
           <div className="flex-1">
             {timeline &&
-              timeline.map((post) => {
-                return <Post key={post._id} post={post} />;
+              timeline.map((post, index) => {
+                return <Post key={`${post.id}${index}`} post={post} />;
               })}
           </div>
         </div>

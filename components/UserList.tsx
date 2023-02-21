@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { UserType } from "@/types/types";
 import Link from "next/link";
 import React from "react";
@@ -11,13 +12,13 @@ interface UserProps {
 }
 
 const User = ({ profileUser }: UserProps) => {
-  const { displayName, username, profileImage, _id } = profileUser;
+  const { displayName, username, profileImage, id } = profileUser;
   const { user } = useAuth();
 
   return (
-    <Link href={`/user/${_id}`}>
+    <Link href={`/user/${id}`}>
       <div className="border-t flex flex-col relative">
-        {user.following && user.following.includes(_id) ? (
+        {user.following && user.following.includes(id) ? (
           <p className="absolute text-xs bg-slate-400 text-white top-0 right-0 px-1">
             following
           </p>
@@ -51,9 +52,9 @@ const UserList = ({ users }: ListProps) => {
       {users && (
         <ul>
           {users
-            .filter((userItem) => userItem._id !== user._id)
+            .filter((userItem) => userItem.id !== user.id)
             .map((userItem) => {
-              return <User key={userItem._id} profileUser={userItem} />;
+              return <User key={userItem.id} profileUser={userItem} />;
             })}
         </ul>
       )}
