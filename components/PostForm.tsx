@@ -39,7 +39,6 @@ const PostForm = ({ post, setEditOpen }: Props) => {
     if (!post) {
       submitPost(data);
       setValue("content", "");
-      refreshData();
     } else {
       updatePost(data, post._id);
       setEditOpen && setEditOpen(false);

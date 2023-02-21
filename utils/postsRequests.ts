@@ -23,6 +23,7 @@ export async function submitPost(data: { content: string }) {
     );
 
     const resp = await submit.json();
+    refreshData();
   } catch (error) {
     return console.error(error);
   }
