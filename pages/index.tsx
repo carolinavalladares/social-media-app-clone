@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import Head from "next/head";
 import useAuth from "@/hooks/useAuth";
 import { GetServerSideProps } from "next";
@@ -7,7 +6,6 @@ import UserBadge from "@/components/UserBadge";
 import PostForm from "@/components/PostForm";
 import UserList from "@/components/UserList";
 import { PostType, UserType } from "@/types/types";
-import { refreshData } from "@/utils/refreshData";
 import Post from "@/components/Post";
 
 interface Props {

@@ -1,5 +1,6 @@
 import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
+import SignOutBtn from "./SignOutBtn";
 
 const UserBadge = () => {
   const { user, signOut } = useAuth();
@@ -32,12 +33,7 @@ const UserBadge = () => {
       </Link>
 
       <div className="mt-7 flex items-center justify-center">
-        <button
-          onClick={handleSignOut}
-          className="bg-slate-700 text-white font-semibold px-2 py-1 text-xs flex items-center justify-center"
-        >
-          Sign out
-        </button>
+        <SignOutBtn />
       </div>
     </div>
   );

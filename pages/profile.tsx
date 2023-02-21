@@ -6,16 +6,16 @@ import { parseCookies } from "nookies";
 import Post from "@/components/Post";
 import Link from "next/link";
 import { convertToLocalTime } from "@/utils/convertToLocalTime";
-
 import EditPopup from "@/components/EditPopup";
 import { deletePost } from "@/utils/postsRequests";
+import SignOutBtn from "@/components/SignOutBtn";
 interface Props {
   posts: PostType[];
 }
 
 export default function ({ posts }: Props) {
   const [editOpen, setEditOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const {
     profileImage,
     displayName,
@@ -46,32 +46,37 @@ export default function ({ posts }: Props) {
       <div className="bg-white shadow-md p-4 ">
         {user && (
           <>
-            {/* top container */}
-
-            <div className="flex items-center gap-2">
-              {/* picture container */}
-              <div className="h-12 w-12 rounded-full bg-slate-300 border border-slate-400 flex items-center justify-center">
-                {profileImage && (
-                  <img src={`${profileImage}`} alt="profile image" />
-                )}
-              </div>
-              {/* username */}
+            <div className="flex justify-between items-start">
               <div>
-                <h4 className="font-semibold m-0 text-base leading-none mb-1">
-                  {displayName}
-                </h4>
-                <p className=" m-0 text-sm leading-none text-slate-400">
-                  @{username}
-                </p>
-              </div>
-            </div>
+                {/* top container */}
+                <div className="flex items-center gap-2 ">
+                  {/* picture container */}
+                  <div className="h-12 w-12 rounded-full bg-slate-300 border border-slate-400 flex items-center justify-center">
+                    {profileImage && (
+                      <img src={`${profileImage}`} alt="profile image" />
+                    )}
+                  </div>
+                  {/* username */}
+                  <div>
+                    <h4 className="font-semibold m-0 text-base leading-none mb-1">
+                      {displayName}
+                    </h4>
+                    <p className=" m-0 text-sm leading-none text-slate-400">
+                      @{username}
+                    </p>
+                  </div>
+                </div>
 
-            <div className="mt-2">
-              {createdAt && (
-                <p className="text-slate-400 text-xs">
-                  member since {convertToLocalTime(createdAt).monthYear}
-                </p>
-              )}
+                <div className="mt-2">
+                  {createdAt && (
+                    <p className="text-slate-400 text-xs">
+                      member since {convertToLocalTime(createdAt).monthYear}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <SignOutBtn />
             </div>
 
             <div className="flex items-center text-slate-400 text-sm gap-2 pt-2 border-t mt-3">
