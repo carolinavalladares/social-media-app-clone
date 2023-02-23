@@ -5,12 +5,12 @@ import { AiOutlineClose } from "react-icons/ai";
 
 interface Props {
   post: PostType;
-  setEditOpen: React.Dispatch<boolean>;
+  setEditPopupOpen: React.Dispatch<boolean>;
 }
 
-const EditPopup = ({ post, setEditOpen }: Props) => {
+const EditPopup = ({ post, setEditPopupOpen }: Props) => {
   const handleClose = () => {
-    setEditOpen(false);
+    setEditPopupOpen(false);
   };
 
   return (
@@ -23,7 +23,7 @@ const EditPopup = ({ post, setEditOpen }: Props) => {
           <AiOutlineClose />
         </button>
         <h1 className="text-base font-semibold mb-5">Edit Post</h1>
-        <PostForm setEditOpen={setEditOpen} post={post} />
+        <PostForm setEditOpen={setEditPopupOpen} post={post} />
       </div>
 
       {/* Overlay */}

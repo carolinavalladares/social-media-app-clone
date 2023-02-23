@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function ({ posts }: Props) {
-  const [editOpen, setEditOpen] = useState(false);
+  const [editPopupOpen, setEditPopupOpen] = useState(false);
   const { user, signOut } = useAuth();
   const {
     profileImage,
@@ -25,8 +25,11 @@ export default function ({ posts }: Props) {
     createdAt,
   } = user;
 
-  const handleEdit = () => {
-    setEditOpen(true);
+  const [editPost, setEditPost] = useState(posts[0]);
+
+  const handleEdit = (post: PostType) => {
+    setEditPost(post);
+    setEditPopupOpen(true);
   };
 
   const handleDelete = async (postId: string) => {
@@ -108,7 +111,10 @@ export default function ({ posts }: Props) {
                     {/* Add post management options here */}
 
                     <div className="flex items-center gap-2 text-sm font-semibold">
-                      <button onClick={handleEdit} className="text-teal-500">
+                      <button
+                        onClick={() => handleEdit(post)}
+                        className="text-teal-500"
+                      >
                         Edit
                       </button>
                       <button
@@ -117,15 +123,15 @@ export default function ({ posts }: Props) {
                       >
                         Delete
                       </button>
-
-                      {editOpen && (
-                        <EditPopup setEditOpen={setEditOpen} post={post} />
-                      )}
                     </div>
                   </Post>
                 );
               })}
             </div>
+          )}
+
+          {editPopupOpen && (
+            <EditPopup setEditPopupOpen={setEditPopupOpen} post={editPost} />
           )}
         </div>
       )}
