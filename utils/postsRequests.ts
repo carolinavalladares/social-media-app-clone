@@ -77,3 +77,47 @@ export async function deletePost(postId: string) {
 
   refreshData();
 }
+
+export async function likePost(postId: string) {
+  const token = getToken();
+  try {
+    const likeReq = await fetch(
+      `${process.env.NEXT_PUBLIC_LIKE_POST_ENDPOINT}/${postId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const like = await likeReq.json();
+    refreshData();
+    console.log(like);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function dislikePost(postId: string) {
+  const token = getToken();
+  try {
+    const dislikeReq = await fetch(
+      `${process.env.NEXT_PUBLIC_DISLIKE_POST_ENDPOINT}/${postId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const dislike = await dislikeReq.json();
+    refreshData();
+    console.log(dislike);
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -15,7 +15,7 @@ interface Props {
 
 export default function ({ posts }: Props) {
   const [editPopupOpen, setEditPopupOpen] = useState(false);
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const {
     profileImage,
     displayName,
