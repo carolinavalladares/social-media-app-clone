@@ -14,7 +14,7 @@ interface Props {
 }
 
 export default function Home({ users, timeline }: Props) {
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   return (
     <>
@@ -40,11 +40,10 @@ export default function Home({ users, timeline }: Props) {
             <UserList users={users} />
           </div>
 
-          {/* timeline */}
           <div className="flex-1">
             {timeline &&
               timeline.map((post, index) => {
-                return <Post key={`${post.id}${index}`} post={post} />;
+                return <Post key={`${post.id}${index}`} postItem={post} />;
               })}
           </div>
         </div>
