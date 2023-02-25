@@ -54,7 +54,11 @@ const PostForm = ({ post, setEditOpen }: Props) => {
         <div className=" flex flex-1 mb-2 h-1/2">
           <textarea
             {...register("content", { required: true })}
-            className="w-full resize-none border p-2 outline-none font-normal placeholder:text-slate-300"
+            className={`w-full resize-none border p-2 outline-none font-normal placeholder:text-slate-300 focus:border-slate-600 ${
+              watchContent[0] && watchContent[0].length > 300
+                ? "border-rose-600 focus:border-rose-600"
+                : null
+            } `}
             rows={10}
             placeholder={"What's happening?"}
           ></textarea>

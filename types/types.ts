@@ -5,7 +5,6 @@ export interface UserType {
   id: string;
   following: string[];
   followers: string[];
-
   profileImage: string;
   createdAt: string;
 }
@@ -33,6 +32,20 @@ export interface PostType {
   favourites: string[];
   createdAt: string;
   updatedAt: string;
+  comments: string[];
+}
+
+export default interface CommentType {
+  id: string;
+  content: string;
+  postId: string;
+  authorId: string;
+  author: {
+    displayName: string;
+    username: string;
+    profileImage: string;
+  };
+  createdAt: string;
 }
 
 // =====

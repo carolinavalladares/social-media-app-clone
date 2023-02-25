@@ -113,7 +113,7 @@ export default function ({ posts }: Props) {
               <div>
                 {posts.map((post) => {
                   return (
-                    <Post key={post.id} postItem={post}>
+                    <Post showCommentsBtn={true} key={post.id} postItem={post}>
                       {/* Add post management options here */}
 
                       <div className="flex items-center gap-2 text-sm font-semibold">

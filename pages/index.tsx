@@ -7,6 +7,8 @@ import PostForm from "@/components/PostForm";
 import UserList from "@/components/UserList";
 import { PostType, UserType } from "@/types/types";
 import Post from "@/components/Post";
+import Link from "next/link";
+import { FaRegCommentDots } from "react-icons/fa";
 
 interface Props {
   users: UserType[];
@@ -41,7 +43,13 @@ export default function Home({ users, timeline }: Props) {
           <div className="flex-1">
             {timeline &&
               timeline.map((post, index) => {
-                return <Post key={`${post.id}${index}`} postItem={post} />;
+                return (
+                  <Post
+                    key={`${post.id}${index}`}
+                    showCommentsBtn={true}
+                    postItem={post}
+                  ></Post>
+                );
               })}
           </div>
         </div>

@@ -121,3 +121,31 @@ export async function dislikePost(postId: string) {
     console.log(error);
   }
 }
+
+export async function addComment(postId: string, content: string) {
+  const token = getToken();
+
+  const body = { content };
+
+  try {
+    const commentPostReq = await fetch(
+      `${process.env.NEXT_PUBLIC_ADD_COMMENT_ENDPOINT}/${postId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      }
+    );
+    const comment = await commentPostReq.json();
+
+    console.log(comment);
+
+    refreshData();
+  } catch (error) {
+    console.log(error);
+  }
+}
