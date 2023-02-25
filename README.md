@@ -2,7 +2,7 @@
 
 Run `npm run dev` to start the project locally.
 
-This is a social media app clone.
+This is a social media app clone developed using NextJs, Typescript and Tailwind CSS.
 
 Users can register, log in, follow other users, make posts, like and comment other users' posts.
 
