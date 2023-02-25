@@ -104,7 +104,13 @@ export default function Page({ profileUser, profileUserPosts }: Props) {
             ) : (
               <div>
                 {profileUserPosts.map((post) => {
-                  return <Post key={post.id} postItem={post} />;
+                  return (
+                    <Post
+                      showCommentsBtn={true}
+                      key={post.id}
+                      postItem={post}
+                    />
+                  );
                 })}
               </div>
             )}

@@ -116,7 +116,7 @@ export default function ({ posts }: Props) {
                     <Post showCommentsBtn={true} key={post.id} postItem={post}>
                       {/* Add post management options here */}
 
-                      <div className="flex items-center gap-2 text-sm font-semibold">
+                      <div className="flex items-center gap-2 text-sm font-semibold bg-white px-4 pb-4">
                         <button
                           onClick={() => handleEdit(post)}
                           className="text-teal-500"
