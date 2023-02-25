@@ -7,8 +7,6 @@ import PostForm from "@/components/PostForm";
 import UserList from "@/components/UserList";
 import { PostType, UserType } from "@/types/types";
 import Post from "@/components/Post";
-import { AiOutlineStar, AiFillStar } from "react-icons/ai";
-import { likePost, dislikePost } from "@/utils/postsRequests";
 
 interface Props {
   users: UserType[];
@@ -16,16 +14,6 @@ interface Props {
 }
 
 export default function Home({ users, timeline }: Props) {
-  const { user } = useAuth();
-
-  const handleLike = (post: PostType) => {
-    if (post.favourites.includes(user.id)) {
-      dislikePost(post.id);
-    } else {
-      likePost(post.id);
-    }
-  };
-
   return (
     <>
       <Head>
@@ -53,22 +41,7 @@ export default function Home({ users, timeline }: Props) {
           <div className="flex-1">
             {timeline &&
               timeline.map((post, index) => {
-                return (
-                  <Post key={`${post.id}${index}`} postItem={post}>
-                    <button
-                      onClick={() => handleLike(post)}
-                      className="flex items-center gap-1 text-yellow-500"
-                    >
-                      {post.favourites.includes(user.id) ? (
-                        <AiFillStar className="text-lg" />
-                      ) : (
-                        <AiOutlineStar className="text-lg" />
-                      )}
-
-                      <span className="text-xs">{post.favourites.length}</span>
-                    </button>
-                  </Post>
-                );
+                return <Post key={`${post.id}${index}`} postItem={post} />;
               })}
           </div>
         </div>

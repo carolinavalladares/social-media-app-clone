@@ -93,7 +93,7 @@ export async function likePost(postId: string) {
       }
     );
     const like = await likeReq.json();
-    refreshData();
+
     console.log(like);
   } catch (error) {
     console.log(error);
@@ -115,7 +115,7 @@ export async function dislikePost(postId: string) {
       }
     );
     const dislike = await dislikeReq.json();
-    refreshData();
+
     console.log(dislike);
   } catch (error) {
     console.log(error);

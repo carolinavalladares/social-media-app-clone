@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { PostType } from "@/types/types";
 import { convertToLocalTime } from "@/utils/convertToLocalTime";
+import { AiOutlineStar, AiFillStar } from "react-icons/ai";
+import { likePost, dislikePost } from "@/utils/postsRequests";
+import useAuth from "@/hooks/useAuth";
 
 interface Props {
   postItem: PostType;
@@ -8,16 +11,34 @@ interface Props {
 }
 
 const Post = ({ postItem, children }: Props) => {
+  const { user } = useAuth();
   const [post, setPost] = useState(postItem);
   const [hydrated, setHydrated] = useState(false);
+  const [liked, setLiked] = useState(false);
 
   useEffect(() => {
     setHydrated(true);
   }, []);
+  useEffect(() => {
+    setLiked(post.favourites.includes(user.id));
+  }, [user, post]);
 
   if (!hydrated) {
     return <></>;
   }
+
+  const handleLike = (post: PostType) => {
+    if (post.favourites.includes(user.id)) {
+      dislikePost(post.id);
+      const userIdIndex = post.favourites.indexOf(user.id);
+      post.favourites.splice(userIdIndex, 1);
+      setLiked(false);
+    } else {
+      likePost(post.id);
+      post.favourites.push(user.id);
+      setLiked(true);
+    }
+  };
 
   return (
     <div className="bg-white shadow-md p-4 mt-4">
@@ -63,7 +84,22 @@ const Post = ({ postItem, children }: Props) => {
         )}
       </div>
 
-      {children && <div className="border-t pt-2 mt-2 pl-2">{children}</div>}
+      <div className="border-t pt-2 mt-2 pl-2">
+        <button
+          onClick={() => handleLike(post)}
+          className="flex items-center gap-1 text-yellow-500"
+        >
+          {liked ? (
+            <AiFillStar className="text-lg" />
+          ) : (
+            <AiOutlineStar className="text-lg" />
+          )}
+
+          <span className="text-xs">{post.favourites.length}</span>
+        </button>
+      </div>
+
+      {children && <div className="pt-2 mt-2 pl-2">{children}</div>}
     </div>
   );
 };
